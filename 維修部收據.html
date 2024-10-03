@@ -7,7 +7,7 @@
     <!-- 引入Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- 引入Font Awesome图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-tEMwxh+4uS0ooFaaSN7BzUKCM1KFzICObhUsdD6+jr6IvZ3qwwXn/3UgEqHkhSUxMp0jEjF0ecrRSEfoEe30Mw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-HlKiefNJSc4bww0N7wsl9CdtXCDkmAzTBkVGL2x5lpTMVW2wauR9hbW296810I0ENu7WdfPQKpAKe4I0jeYekg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* 使用CSS变量统一管理颜色和字体大小 */
         :root {
@@ -125,16 +125,19 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .machine-data-icon {
             font-size: 24px;
             color: var(--accent-color);
             margin-right: 15px;
+            flex: 0 0 30px;
         }
 
         .machine-data-details {
             flex: 1;
+            min-width: 0; /* 防止内容溢出 */
         }
 
         .machine-data-details h4 {
@@ -178,18 +181,25 @@
             padding: 0 10px;
         }
 
-        .signature p {
-            margin: 5px 0;
-            font-weight: 500;
+        .signature h3 {
+            font-size: var(--heading-font-size);
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            position: relative;
         }
 
-        .signature-line {
-            width: 50%;
-            border-bottom: 1px solid #000;
-            margin-top: 50px;
+        .signature h3::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
         }
 
-        /* 签名图片样式 */
         .signature-image {
             margin-top: 20px;
             text-align: left;
@@ -257,6 +267,7 @@
             border-radius: 8px;
             width: 100%;
             height: 200px;
+            touch-action: none; /* 防止移动端手势干扰 */
         }
 
         /* 签名按钮样式 */
@@ -365,12 +376,81 @@
             .logo img {
                 max-width: 100%;
             }
+
+            .machine-data-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .machine-data-icon {
+                margin-bottom: 10px;
+            }
         }
 
         /* 防止滚动穿透 */
         body.modal-open {
             overflow: hidden;
         }
+
+        /* Form styling */
+        #form-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1500;
+            overflow-y: auto;
+        }
+
+        #form-container form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 90%;
+            box-sizing: border-box;
+        }
+
+        #form-container h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        #form-container label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        #form-container input,
+        #form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: var(--text-font-size);
+            transition: border-color 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        #form-container input:focus,
+        #form-container textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
     </style>
 </head>
 <body>
@@ -448,7 +528,7 @@
 <button id="print-btn" onclick="window.print()" aria-label="Print Receipt"><i class="fas fa-print"></i></button>
 
 <!-- Hidden Form (Data Entry) -->
-<div id="form-container">
+<div id="form-container" style="display: none;">
     <!-- Form content -->
     <form id="data-entry-form">
         <h2>Input Data</h2>
@@ -482,78 +562,102 @@
                 <label for="data-voltage">Voltage (V):</label>
                 <input type="text" id="data-voltage" required aria-required="true">
             </div>
+            <!-- 继续添加其他机身数据输入栏位，共20个 -->
+            <!-- ... -->
+            <!-- 我们需要在这个地方完整列出所有的20个输入栏位 -->
+
+            <!-- 为了方便，这里将所有20个机身数据输入栏位完整列出 -->
+            <!-- 2 -->
             <div class="machine-data-item">
                 <label for="data-current">Current (A):</label>
                 <input type="text" id="data-current" required aria-required="true">
             </div>
+            <!-- 3 -->
             <div class="machine-data-item">
                 <label for="data-temperature">Temperature (°C):</label>
                 <input type="text" id="data-temperature" required aria-required="true">
             </div>
+            <!-- 4 -->
             <div class="machine-data-item">
                 <label for="data-power">Power (W):</label>
                 <input type="text" id="data-power" required aria-required="true">
             </div>
+            <!-- 5 -->
             <div class="machine-data-item">
                 <label for="data-status">Machine Status:</label>
                 <input type="text" id="data-status" required aria-required="true">
             </div>
+            <!-- 6 -->
             <div class="machine-data-item">
                 <label for="data-operating-hours">Operating Hours:</label>
                 <input type="text" id="data-operating-hours" required aria-required="true">
             </div>
+            <!-- 7 -->
             <div class="machine-data-item">
                 <label for="data-last-maintenance-date">Last Maintenance Date:</label>
                 <input type="date" id="data-last-maintenance-date" required aria-required="true">
             </div>
+            <!-- 8 -->
             <div class="machine-data-item">
                 <label for="data-oil-level">Oil Level:</label>
                 <input type="text" id="data-oil-level" required aria-required="true">
             </div>
+            <!-- 9 -->
             <div class="machine-data-item">
                 <label for="data-noise-level">Noise Level (dB):</label>
                 <input type="text" id="data-noise-level" required aria-required="true">
             </div>
+            <!-- 10 -->
             <div class="machine-data-item">
                 <label for="data-vibration-level">Vibration Level:</label>
                 <input type="text" id="data-vibration-level" required aria-required="true">
             </div>
+            <!-- 11 -->
             <div class="machine-data-item">
                 <label for="data-pressure">Pressure (Bar):</label>
                 <input type="text" id="data-pressure" required aria-required="true">
             </div>
+            <!-- 12 -->
             <div class="machine-data-item">
                 <label for="data-flow-rate">Flow Rate:</label>
                 <input type="text" id="data-flow-rate" required aria-required="true">
             </div>
+            <!-- 13 -->
             <div class="machine-data-item">
                 <label for="data-lubrication-status">Lubrication Status:</label>
                 <input type="text" id="data-lubrication-status" required aria-required="true">
             </div>
+            <!-- 14 -->
             <div class="machine-data-item">
                 <label for="data-error-codes">Error Codes:</label>
                 <input type="text" id="data-error-codes" required aria-required="true">
             </div>
+            <!-- 15 -->
             <div class="machine-data-item">
                 <label for="data-firmware-version">Firmware Version:</label>
                 <input type="text" id="data-firmware-version" required aria-required="true">
             </div>
+            <!-- 16 -->
             <div class="machine-data-item">
                 <label for="data-battery-status">Battery Status:</label>
                 <input type="text" id="data-battery-status" required aria-required="true">
             </div>
+            <!-- 17 -->
             <div class="machine-data-item">
                 <label for="data-load-percentage">Load Percentage (%):</label>
                 <input type="text" id="data-load-percentage" required aria-required="true">
             </div>
+            <!-- 18 -->
             <div class="machine-data-item">
                 <label for="data-humidity">Humidity (%RH):</label>
                 <input type="text" id="data-humidity" required aria-required="true">
             </div>
+            <!-- 19 -->
             <div class="machine-data-item">
                 <label for="data-air-filter-condition">Air Filter Condition:</label>
                 <input type="text" id="data-air-filter-condition" required aria-required="true">
             </div>
+            <!-- 20 -->
             <div class="machine-data-item">
                 <label for="data-cooling-system-condition">Cooling System Condition:</label>
                 <input type="text" id="data-cooling-system-condition" required aria-required="true">
@@ -689,6 +793,7 @@
 
     showFormBtn.addEventListener('click', () => {
         formContainer.style.display = 'block';
+        document.body.classList.add('modal-open');
         loadFormData();
         window.scrollTo(0, 0);
     });
@@ -696,6 +801,15 @@
     formContainer.addEventListener('click', (e) => {
         if (e.target === formContainer) {
             formContainer.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }
+    });
+
+    // Close form when pressing Esc
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && formContainer.style.display === 'block') {
+            formContainer.style.display = 'none';
+            document.body.classList.remove('modal-open');
         }
     });
 
@@ -740,6 +854,11 @@
         }
     });
 
+    // Prevent scrolling when drawing on touch devices
+    signatureCanvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+    });
+
     function draw(e) {
         if (!isDrawing) return;
         e.preventDefault();
@@ -763,45 +882,46 @@
         lastY = y;
     }
 
-    signatureCanvas.addEventListener('mousedown', (e) => {
+    function startDrawing(e) {
         isDrawing = true;
-        lastX = e.offsetX;
-        lastY = e.offsetY;
-    });
+        if (e.type.includes('touch')) {
+            const rect = signatureCanvas.getBoundingClientRect();
+            lastX = e.touches[0].clientX - rect.left;
+            lastY = e.touches[0].clientY - rect.top;
+        } else {
+            lastX = e.offsetX;
+            lastY = e.offsetY;
+        }
+    }
 
+    function stopDrawing() {
+        isDrawing = false;
+    }
+
+    signatureCanvas.addEventListener('mousedown', startDrawing);
     signatureCanvas.addEventListener('mousemove', draw);
-
-    signatureCanvas.addEventListener('mouseup', () => {
-        isDrawing = false;
-    });
-
-    signatureCanvas.addEventListener('mouseout', () => {
-        isDrawing = false;
-    });
+    signatureCanvas.addEventListener('mouseup', stopDrawing);
+    signatureCanvas.addEventListener('mouseout', stopDrawing);
 
     // Touch events for mobile devices
-    signatureCanvas.addEventListener('touchstart', (e) => {
-        isDrawing = true;
-        const rect = signatureCanvas.getBoundingClientRect();
-        lastX = e.touches[0].clientX - rect.left;
-        lastY = e.touches[0].clientY - rect.top;
-    });
-
+    signatureCanvas.addEventListener('touchstart', startDrawing);
     signatureCanvas.addEventListener('touchmove', draw);
-
-    signatureCanvas.addEventListener('touchend', () => {
-        isDrawing = false;
-    });
+    signatureCanvas.addEventListener('touchend', stopDrawing);
 
     clearSignatureBtn.addEventListener('click', () => {
         ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
     });
 
     saveSignatureBtn.addEventListener('click', () => {
-        if (ctx.getImageData(0, 0, signatureCanvas.width, signatureCanvas.height).data.every(pixel => pixel === 0)) {
+        const emptyCanvas = document.createElement('canvas');
+        emptyCanvas.width = signatureCanvas.width;
+        emptyCanvas.height = signatureCanvas.height;
+
+        if (signatureCanvas.toDataURL() === emptyCanvas.toDataURL()) {
             alert('Please provide a signature.');
             return;
         }
+
         signatureDataURL = signatureCanvas.toDataURL();
         signaturePreview.innerHTML = '<p>Signature added.</p>';
         signatureModal.style.display = 'none';
@@ -895,6 +1015,7 @@
 
         // Hide form after submission
         formContainer.style.display = 'none';
+        document.body.classList.remove('modal-open');
 
         // Show success message
         alert('Receipt has been generated successfully!');

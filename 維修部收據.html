@@ -649,10 +649,10 @@
 <div id="signature-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <h2>請在此簽名</h2>
+        <h2>请在此签名</h2>
         <canvas id="signature-canvas"></canvas>
         <div>
-            <button type="button" id="save-signature">保存簽名</button>
+            <button type="button" id="save-signature">保存签名</button>
             <button type="button" id="clear-signature">清除</button>
         </div>
     </div>
@@ -725,7 +725,7 @@
         document.getElementById('signature-image-container').innerHTML = '';
         document.getElementById('machine-data-inputs').innerHTML = '';
         machineDataCount = 0;
-        alert('表單已清空。');
+        alert('表单已清空。');
         currentStep = 1;
         showCurrentStep();
         updateProgressIndicator();
@@ -755,7 +755,7 @@
             }
             if (formData['signatureDataURL']) {
                 signatureDataURL = formData['signatureDataURL'];
-                document.getElementById('signature-preview').innerHTML = '<p>已添加簽名。</p>';
+                document.getElementById('signature-preview').innerHTML = '<p>已添加签名。</p>';
             }
             if (formData['machineData']) {
                 formData['machineData'].forEach(dataItem => {
@@ -773,7 +773,7 @@
 
     function addMachineData(description = '', value = '') {
         if (machineDataCount >= maxMachineDataItems) {
-            alert('您已達到最大機身數據項數量。');
+            alert('您已达到最大机身数据项数量。');
             return;
         }
         const container = document.getElementById('machine-data-inputs');
@@ -786,7 +786,7 @@
         const descriptionInput = document.createElement('input');
         descriptionInput.type = 'text';
         descriptionInput.name = `data-description-${index}`;
-        descriptionInput.placeholder = '數據描述';
+        descriptionInput.placeholder = '数据描述';
         descriptionInput.value = description;
         descriptionInput.required = true;
         dataDiv.appendChild(descriptionInput);
@@ -961,7 +961,7 @@
         emptyCanvas.height = signatureCanvas.height;
 
         if (signatureCanvas.toDataURL() === emptyCanvas.toDataURL()) {
-            alert('請提供簽名。');
+            alert('请提供签名。');
             return;
         }
 
@@ -1027,7 +1027,7 @@
             const signatureImageContainer = document.getElementById('signature-image-container');
             signatureImageContainer.innerHTML = `<img src="${signatureDataURL}" alt="Customer Signature">`;
         } else {
-            alert('請提供簽名。');
+            alert('请提供签名。');
             return;
         }
 
@@ -1036,7 +1036,7 @@
         document.body.classList.remove('modal-open');
 
         // Show success message
-        alert('收據已成功生成！');
+        alert('收据已成功生成！');
 
         // Scroll to the top of the receipt
         window.scrollTo(0, 0);

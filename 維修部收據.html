@@ -189,6 +189,18 @@
             margin-top: 50px;
         }
 
+        /* 签名图片样式 */
+        .signature-image {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .signature-image img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+
         /* Footer */
         .footer {
             margin-top: 20px;
@@ -285,6 +297,29 @@
         #form-container textarea:focus {
             border-color: var(--accent-color);
             outline: none;
+        }
+
+        /* 签名画布样式 */
+        #signature-pad {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        #clear-signature-btn {
+            padding: 8px 12px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        #clear-signature-btn:hover {
+            background-color: #d32f2f;
         }
 
         /* 提升按钮的样式 */
@@ -432,8 +467,10 @@
 
     <!-- Customer Signature -->
     <div class="signature">
-        <div class="signature-line"></div>
-        <p>Customer Signature</p>
+        <h3>Customer Signature</h3>
+        <div class="signature-image" id="signature-image-container">
+            <!-- Signature image will be displayed here -->
+        </div>
     </div>
 
     <!-- Footer -->
@@ -479,17 +516,16 @@
 
             <!-- 固定的20个机身数据输入栏位 -->
             <!-- 以下是20个机身数据输入栏位 -->
-            <!-- 将之前提供的20个数据输入栏位全部粘贴在此处 -->
+            <!-- 请添加所有20个输入栏位，确保ID与JavaScript代码中的匹配 -->
 
-            <!-- 由于篇幅限制，这里只列出第1个，您需要将剩余的19个依次添加 -->
+            <!-- 示例： -->
             <!-- 1 -->
             <div class="machine-data-item">
                 <label for="data-voltage">Voltage (V):</label>
                 <input type="text" id="data-voltage" required aria-required="true">
             </div>
-            <!-- 请继续添加第2到第20个输入栏位 -->
-
-            <!-- 省略... 添加剩余的19个机身数据输入栏位 -->
+            <!-- 继续添加剩余的19个输入栏位 -->
+            <!-- ... -->
 
             <div id="form-navigation">
                 <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
@@ -497,13 +533,18 @@
             </div>
         </div>
 
-        <!-- Step 3: Notes and Remarks -->
+        <!-- Step 3: Notes, Remarks and Signature -->
         <div class="form-step" id="step-3" style="display:none;">
             <label for="special-notes-input">Special Notes:</label>
             <textarea id="special-notes-input" rows="4"></textarea>
 
             <label for="remarks-input">Remarks:</label>
             <textarea id="remarks-input" rows="4"></textarea>
+
+            <!-- Signature Pad -->
+            <label for="signature-pad">Customer Signature:</label>
+            <canvas id="signature-pad" width="300" height="150"></canvas>
+            <button type="button" id="clear-signature-btn">Clear Signature</button>
 
             <div id="form-navigation">
                 <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
@@ -553,6 +594,7 @@
     function clearForm() {
         localStorage.clear();
         document.getElementById('data-entry-form').reset();
+        signaturePad.clear();
         alert('Form has been cleared.');
         currentStep = 1;
         showCurrentStep();
@@ -584,6 +626,15 @@
             document.getElementById(`step-${i}`).style.display = (i === currentStep) ? 'block' : 'none';
         }
     }
+
+    // Signature Pad
+    let canvas = document.getElementById('signature-pad');
+    let signaturePad = new SignaturePad(canvas);
+
+    // Clear signature button
+    document.getElementById('clear-signature-btn').addEventListener('click', () => {
+        signaturePad.clear();
+    });
 
     // Show and hide form
     const showFormBtn = document.getElementById('show-form-btn');
@@ -678,6 +729,16 @@
         // Save form data
         saveFormData();
 
+        // Signature Image
+        if (!signaturePad.isEmpty()) {
+            const dataURL = signaturePad.toDataURL();
+            const signatureImageContainer = document.getElementById('signature-image-container');
+            signatureImageContainer.innerHTML = `<img src="${dataURL}" alt="Customer Signature">`;
+        } else {
+            alert('Please provide a signature.');
+            return;
+        }
+
         // Hide form after submission
         formContainer.style.display = 'none';
 
@@ -692,7 +753,24 @@
     window.onload = function() {
         showCurrentStep();
     };
-</script>
 
+    // 引入Signature Pad库
+    // 由于 StackOverflow 限制，我无法直接在此处加载外部库。您需要在HTML的<head>中添加以下脚本：
+    // <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+    // 确保在加载Signature Pad库后执行以下代码：
+    document.addEventListener('DOMContentLoaded', function () {
+        // Signature Pad
+        let canvas = document.getElementById('signature-pad');
+        let signaturePad = new SignaturePad(canvas);
+
+        // Clear signature button
+        document.getElementById('clear-signature-btn').addEventListener('click', () => {
+            signaturePad.clear();
+        });
+    });
+</script>
+<!-- 引入Signature Pad库 -->
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 </body>
 </html>

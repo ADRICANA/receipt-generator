@@ -237,7 +237,9 @@
 
         .close-modal {
             color: #aaa;
-            float: right;
+            position: absolute;
+            top: 10px;
+            right: 20px;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
@@ -364,6 +366,11 @@
                 max-width: 100%;
             }
         }
+
+        /* 防止滚动穿透 */
+        body.modal-open {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -470,103 +477,83 @@
             <h3>Machine Data</h3>
 
             <!-- 固定的20个机身数据输入栏位 -->
-            <!-- 以下是20个机身数据输入栏位 -->
-            <!-- 1 -->
+            <!-- 这里完整列出所有20个输入栏位 -->
             <div class="machine-data-item">
                 <label for="data-voltage">Voltage (V):</label>
                 <input type="text" id="data-voltage" required aria-required="true">
             </div>
-            <!-- 2 -->
             <div class="machine-data-item">
                 <label for="data-current">Current (A):</label>
                 <input type="text" id="data-current" required aria-required="true">
             </div>
-            <!-- 3 -->
             <div class="machine-data-item">
                 <label for="data-temperature">Temperature (°C):</label>
                 <input type="text" id="data-temperature" required aria-required="true">
             </div>
-            <!-- 4 -->
             <div class="machine-data-item">
                 <label for="data-power">Power (W):</label>
                 <input type="text" id="data-power" required aria-required="true">
             </div>
-            <!-- 5 -->
             <div class="machine-data-item">
                 <label for="data-status">Machine Status:</label>
                 <input type="text" id="data-status" required aria-required="true">
             </div>
-            <!-- 6 -->
             <div class="machine-data-item">
                 <label for="data-operating-hours">Operating Hours:</label>
                 <input type="text" id="data-operating-hours" required aria-required="true">
             </div>
-            <!-- 7 -->
             <div class="machine-data-item">
                 <label for="data-last-maintenance-date">Last Maintenance Date:</label>
                 <input type="date" id="data-last-maintenance-date" required aria-required="true">
             </div>
-            <!-- 8 -->
             <div class="machine-data-item">
                 <label for="data-oil-level">Oil Level:</label>
                 <input type="text" id="data-oil-level" required aria-required="true">
             </div>
-            <!-- 9 -->
             <div class="machine-data-item">
                 <label for="data-noise-level">Noise Level (dB):</label>
                 <input type="text" id="data-noise-level" required aria-required="true">
             </div>
-            <!-- 10 -->
             <div class="machine-data-item">
                 <label for="data-vibration-level">Vibration Level:</label>
                 <input type="text" id="data-vibration-level" required aria-required="true">
             </div>
-            <!-- 11 -->
             <div class="machine-data-item">
                 <label for="data-pressure">Pressure (Bar):</label>
                 <input type="text" id="data-pressure" required aria-required="true">
             </div>
-            <!-- 12 -->
             <div class="machine-data-item">
                 <label for="data-flow-rate">Flow Rate:</label>
                 <input type="text" id="data-flow-rate" required aria-required="true">
             </div>
-            <!-- 13 -->
             <div class="machine-data-item">
                 <label for="data-lubrication-status">Lubrication Status:</label>
                 <input type="text" id="data-lubrication-status" required aria-required="true">
             </div>
-            <!-- 14 -->
             <div class="machine-data-item">
                 <label for="data-error-codes">Error Codes:</label>
                 <input type="text" id="data-error-codes" required aria-required="true">
             </div>
-            <!-- 15 -->
             <div class="machine-data-item">
                 <label for="data-firmware-version">Firmware Version:</label>
                 <input type="text" id="data-firmware-version" required aria-required="true">
             </div>
-            <!-- 16 -->
             <div class="machine-data-item">
                 <label for="data-battery-status">Battery Status:</label>
                 <input type="text" id="data-battery-status" required aria-required="true">
             </div>
-            <!-- 17 -->
             <div class="machine-data-item">
                 <label for="data-load-percentage">Load Percentage (%):</label>
                 <input type="text" id="data-load-percentage" required aria-required="true">
             </div>
-            <!-- 18 -->
             <div class="machine-data-item">
                 <label for="data-humidity">Humidity (%RH):</label>
                 <input type="text" id="data-humidity" required aria-required="true">
             </div>
-            <!-- 19 -->
             <div class="machine-data-item">
                 <label for="data-air-filter-condition">Air Filter Condition:</label>
                 <input type="text" id="data-air-filter-condition" required aria-required="true">
             </div>
-            <!-- 20 -->
             <div class="machine-data-item">
                 <label for="data-cooling-system-condition">Cooling System Condition:</label>
                 <input type="text" id="data-cooling-system-condition" required aria-required="true">
@@ -727,14 +714,15 @@
 
     // Resize canvas to fit modal
     function resizeCanvas() {
-        signatureCanvas.width = signatureModal.offsetWidth - 40; // Adjust as needed
+        signatureCanvas.width = signatureCanvas.offsetWidth;
         signatureCanvas.height = 200;
+        ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
     }
 
     openSignaturePadBtn.addEventListener('click', () => {
         signatureModal.style.display = 'block';
+        document.body.classList.add('modal-open');
         resizeCanvas();
-        ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
@@ -742,11 +730,13 @@
 
     closeModalBtn.addEventListener('click', () => {
         signatureModal.style.display = 'none';
+        document.body.classList.remove('modal-open');
     });
 
     signatureModal.addEventListener('click', (e) => {
         if (e.target === signatureModal) {
             signatureModal.style.display = 'none';
+            document.body.classList.remove('modal-open');
         }
     });
 
@@ -808,13 +798,14 @@
     });
 
     saveSignatureBtn.addEventListener('click', () => {
-        if (signatureCanvas.toDataURL() === document.createElement('canvas').toDataURL()) {
+        if (ctx.getImageData(0, 0, signatureCanvas.width, signatureCanvas.height).data.every(pixel => pixel === 0)) {
             alert('Please provide a signature.');
             return;
         }
         signatureDataURL = signatureCanvas.toDataURL();
         signaturePreview.innerHTML = '<p>Signature added.</p>';
         signatureModal.style.display = 'none';
+        document.body.classList.remove('modal-open');
     });
 
     // Populate receipt with data from form

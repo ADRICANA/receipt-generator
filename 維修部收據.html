@@ -4,26 +4,21 @@
     <meta charset="UTF-8">
     <title>Maintenance Inspection Receipt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 添加favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- 引入新的字體 -->
+    <!-- 引入Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- 如果沒有外部CSS文件，直接在此處使用樣式 -->
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RcQIvEQiBJgR5/yCqpyaDgP31E4CsgBOWRMrI5e37dZ/IezjFZPhb3QNjjhDum" crossorigin="anonymous">
     <style>
-        /* 使用CSS變量統一管理顏色和字體大小 */
+        /* 使用CSS变量统一管理颜色和字体大小 */
         :root {
             --primary-color: #002436;
             --secondary-color: #555;
             --accent-color: #004080;
+            --highlight-color: #e0f7fa;
             --font-family: 'Roboto', sans-serif;
             --title-font-size: 28px;
             --heading-font-size: 18px;
             --text-font-size: 14px;
-            --table-header-bg: #004080;
-            --table-header-color: #fff;
-            --table-row-odd-bg: #f9f9f9;
-            --table-row-even-bg: #fff;
-            --table-row-hover-bg: #e0f0ff;
         }
 
         body {
@@ -85,64 +80,82 @@
             margin-bottom: 30px;
             text-align: left;
             width: 100%;
+            padding: 0 10px;
         }
 
         .section h3 {
             font-size: var(--heading-font-size);
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding-bottom: 5px;
+            position: relative;
+        }
+
+        .section h3::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .section-content {
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
         }
 
         .section p {
-            margin: 5px 0;
+            margin: 10px 0;
             font-size: var(--text-font-size);
             color: #333;
             word-wrap: break-word;
             font-weight: 500;
         }
 
-        /* Machine Data Table Styling */
-        .machine-data {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        /* Machine Data 样式优化 */
+        .machine-data-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
 
-        .machine-data th,
-        .machine-data td {
-            padding: 12px;
-            text-align: left;
+        .machine-data-icon {
+            font-size: 24px;
+            color: var(--accent-color);
+            margin-right: 15px;
+        }
+
+        .machine-data-details {
+            flex: 1;
+        }
+
+        .machine-data-details h4 {
+            margin: 0;
+            font-size: 16px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .machine-data-details p {
+            margin: 5px 0 0;
             font-size: var(--text-font-size);
-            word-wrap: break-word;
-            border-bottom: 1px solid #ddd;
+            color: #333;
+            font-weight: 400;
         }
 
-        .machine-data th {
-            background-color: var(--table-header-bg);
-            color: var(--table-header-color);
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .machine-data tr:nth-child(odd) {
-            background-color: var(--table-row-odd-bg);
-        }
-
-        .machine-data tr:nth-child(even) {
-            background-color: var(--table-row-even-bg);
-        }
-
-        .machine-data tr:hover {
-            background-color: var(--table-row-hover-bg);
-        }
-
+        /* 特别事项和备注样式 */
         .notes-section,
         .remarks-section {
             margin-top: 20px;
+            padding: 0 10px;
         }
 
         .notes-section p,
@@ -150,9 +163,10 @@
             font-size: var(--text-font-size);
             color: #333;
             font-weight: 400;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-left: 4px solid var(--primary-color);
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
         }
 
         /* Signature Section */
@@ -161,6 +175,7 @@
             text-align: left;
             font-size: 16px;
             position: relative;
+            padding: 0 10px;
         }
 
         .signature p {
@@ -232,6 +247,9 @@
             width: 90%;
             max-width: 600px;
             border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 90%;
             box-sizing: border-box;
             background: linear-gradient(to right, #f4f4f4, #fff);
         }
@@ -260,7 +278,7 @@
             box-sizing: border-box;
             font-size: var(--text-font-size);
             transition: border-color 0.3s ease;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
         #form-container input:focus,
@@ -269,7 +287,7 @@
             outline: none;
         }
 
-        /* 提升按鈕的樣式 */
+        /* 提升按钮的样式 */
         #form-container button {
             margin-top: 20px;
             padding: 12px 20px;
@@ -384,26 +402,20 @@
     <!-- Inspection Information -->
     <div class="section inspection-info">
         <h3>Inspection Information</h3>
-        <p><strong>Machine Serial Number:</strong> <span id="machine-serial-number">[Serial Number]</span></p>
-        <p><strong>Inspection Date:</strong> <span id="inspection-date">[Inspection Date]</span></p>
-        <p><strong>Shop Name:</strong> <span id="shop-name">[Shop Name]</span></p>
-        <p><strong>Shop Address:</strong> <span id="shop-address">[Shop Address]</span></p>
+        <div class="section-content">
+            <p><strong>Machine Serial Number:</strong> <span id="machine-serial-number">[Serial Number]</span></p>
+            <p><strong>Inspection Date:</strong> <span id="inspection-date">[Inspection Date]</span></p>
+            <p><strong>Shop Name:</strong> <span id="shop-name">[Shop Name]</span></p>
+            <p><strong>Shop Address:</strong> <span id="shop-address">[Shop Address]</span></p>
+        </div>
     </div>
 
     <!-- Machine Data -->
     <div class="section machine-data-section">
         <h3>Machine Data</h3>
-        <table class="machine-data">
-            <thead>
-                <tr>
-                    <th>Data Description</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody id="machine-data-items">
-                <!-- Machine data items will be populated here -->
-            </tbody>
-        </table>
+        <div id="machine-data-items">
+            <!-- Machine data items will be populated here -->
+        </div>
     </div>
 
     <!-- Special Notes -->
@@ -431,10 +443,10 @@
 </div>
 
 <!-- Show form button -->
-<button id="show-form-btn" aria-label="Input Data">📝</button>
+<button id="show-form-btn" aria-label="Input Data"><i class="fas fa-edit"></i></button>
 
 <!-- Print button -->
-<button id="print-btn" onclick="window.print()" aria-label="Print Receipt">🖨️</button>
+<button id="print-btn" onclick="window.print()" aria-label="Print Receipt"><i class="fas fa-print"></i></button>
 
 <!-- Hidden Form (Data Entry) -->
 <div id="form-container">
@@ -462,16 +474,314 @@
         </div>
 
         <!-- Step 2: Machine Data -->
-        <!-- 保持機身數據欄位不變 -->
+        <div class="form-step" id="step-2" style="display:none;">
+            <h3>Machine Data</h3>
+
+            <!-- 固定的20个机身数据输入栏位 -->
+            <!-- 以下是20个机身数据输入栏位 -->
+
+            <!-- 1 -->
+            <div class="machine-data-item">
+                <label for="data-voltage">Voltage (V):</label>
+                <input type="text" id="data-voltage" required aria-required="true">
+            </div>
+            <!-- 2 -->
+            <div class="machine-data-item">
+                <label for="data-current">Current (A):</label>
+                <input type="text" id="data-current" required aria-required="true">
+            </div>
+            <!-- 3 -->
+            <div class="machine-data-item">
+                <label for="data-temperature">Temperature (°C):</label>
+                <input type="text" id="data-temperature" required aria-required="true">
+            </div>
+            <!-- 4 -->
+            <div class="machine-data-item">
+                <label for="data-power">Power (W):</label>
+                <input type="text" id="data-power" required aria-required="true">
+            </div>
+            <!-- 5 -->
+            <div class="machine-data-item">
+                <label for="data-status">Machine Status:</label>
+                <input type="text" id="data-status" required aria-required="true">
+            </div>
+            <!-- 6 -->
+            <div class="machine-data-item">
+                <label for="data-operating-hours">Operating Hours:</label>
+                <input type="text" id="data-operating-hours" required aria-required="true">
+            </div>
+            <!-- 7 -->
+            <div class="machine-data-item">
+                <label for="data-last-maintenance-date">Last Maintenance Date:</label>
+                <input type="date" id="data-last-maintenance-date" required aria-required="true">
+            </div>
+            <!-- 8 -->
+            <div class="machine-data-item">
+                <label for="data-oil-level">Oil Level:</label>
+                <input type="text" id="data-oil-level" required aria-required="true">
+            </div>
+            <!-- 9 -->
+            <div class="machine-data-item">
+                <label for="data-noise-level">Noise Level (dB):</label>
+                <input type="text" id="data-noise-level" required aria-required="true">
+            </div>
+            <!-- 10 -->
+            <div class="machine-data-item">
+                <label for="data-vibration-level">Vibration Level:</label>
+                <input type="text" id="data-vibration-level" required aria-required="true">
+            </div>
+            <!-- 11 -->
+            <div class="machine-data-item">
+                <label for="data-pressure">Pressure (Bar):</label>
+                <input type="text" id="data-pressure" required aria-required="true">
+            </div>
+            <!-- 12 -->
+            <div class="machine-data-item">
+                <label for="data-flow-rate">Flow Rate:</label>
+                <input type="text" id="data-flow-rate" required aria-required="true">
+            </div>
+            <!-- 13 -->
+            <div class="machine-data-item">
+                <label for="data-lubrication-status">Lubrication Status:</label>
+                <input type="text" id="data-lubrication-status" required aria-required="true">
+            </div>
+            <!-- 14 -->
+            <div class="machine-data-item">
+                <label for="data-error-codes">Error Codes:</label>
+                <input type="text" id="data-error-codes" required aria-required="true">
+            </div>
+            <!-- 15 -->
+            <div class="machine-data-item">
+                <label for="data-firmware-version">Firmware Version:</label>
+                <input type="text" id="data-firmware-version" required aria-required="true">
+            </div>
+            <!-- 16 -->
+            <div class="machine-data-item">
+                <label for="data-battery-status">Battery Status:</label>
+                <input type="text" id="data-battery-status" required aria-required="true">
+            </div>
+            <!-- 17 -->
+            <div class="machine-data-item">
+                <label for="data-load-percentage">Load Percentage (%):</label>
+                <input type="text" id="data-load-percentage" required aria-required="true">
+            </div>
+            <!-- 18 -->
+            <div class="machine-data-item">
+                <label for="data-humidity">Humidity (%RH):</label>
+                <input type="text" id="data-humidity" required aria-required="true">
+            </div>
+            <!-- 19 -->
+            <div class="machine-data-item">
+                <label for="data-air-filter-condition">Air Filter Condition:</label>
+                <input type="text" id="data-air-filter-condition" required aria-required="true">
+            </div>
+            <!-- 20 -->
+            <div class="machine-data-item">
+                <label for="data-cooling-system-condition">Cooling System Condition:</label>
+                <input type="text" id="data-cooling-system-condition" required aria-required="true">
+            </div>
+
+            <div id="form-navigation">
+                <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
+                <button type="button" onclick="nextStep()" aria-label="Next Step">Next Step</button>
+            </div>
+        </div>
 
         <!-- Step 3: Notes and Remarks -->
-        <!-- ...保持不變... -->
+        <div class="form-step" id="step-3" style="display:none;">
+            <label for="special-notes-input">Special Notes:</label>
+            <textarea id="special-notes-input" rows="4"></textarea>
+
+            <label for="remarks-input">Remarks:</label>
+            <textarea id="remarks-input" rows="4"></textarea>
+
+            <div id="form-navigation">
+                <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
+                <button type="submit" aria-label="Generate Receipt">Generate Receipt</button>
+            </div>
+            <button id="clear-form-btn" type="button" onclick="clearForm()" aria-label="Clear Form">Clear Form</button>
+        </div>
     </form>
 </div>
 
 <script>
-    // 保持之前的JavaScript代碼不變
-    // ...（省略）...
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    function nextStep() {
+        if (validateCurrentStep()) {
+            if (currentStep < totalSteps) {
+                document.getElementById(`step-${currentStep}`).style.display = 'none';
+                currentStep++;
+                document.getElementById(`step-${currentStep}`).style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            document.getElementById(`step-${currentStep}`).style.display = 'none';
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    }
+
+    function validateCurrentStep() {
+        const inputs = document.querySelectorAll(`#step-${currentStep} input, #step-${currentStep} textarea`);
+        let valid = true;
+        inputs.forEach(input => {
+            if (!input.checkValidity()) {
+                input.reportValidity();
+                valid = false;
+            }
+        });
+        return valid;
+    }
+
+    function clearForm() {
+        localStorage.clear();
+        document.getElementById('data-entry-form').reset();
+        alert('Form has been cleared.');
+        currentStep = 1;
+        showCurrentStep();
+    }
+
+    function saveFormData() {
+        const inputs = document.querySelectorAll('#data-entry-form input, #data-entry-form textarea');
+        const formData = {};
+        inputs.forEach(input => {
+            formData[input.id] = input.value;
+        });
+        localStorage.setItem('formData', JSON.stringify(formData));
+    }
+
+    function loadFormData() {
+        const savedData = localStorage.getItem('formData');
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            for (const key in formData) {
+                if (formData.hasOwnProperty(key) && document.getElementById(key)) {
+                    document.getElementById(key).value = formData[key];
+                }
+            }
+        }
+    }
+
+    function showCurrentStep() {
+        for (let i = 1; i <= totalSteps; i++) {
+            document.getElementById(`step-${i}`).style.display = (i === currentStep) ? 'block' : 'none';
+        }
+    }
+
+    // Show and hide form
+    const showFormBtn = document.getElementById('show-form-btn');
+    const formContainer = document.getElementById('form-container');
+    const dataEntryForm = document.getElementById('data-entry-form');
+
+    showFormBtn.addEventListener('click', () => {
+        formContainer.style.display = 'block';
+        loadFormData();
+        window.scrollTo(0, 0);
+    });
+
+    formContainer.addEventListener('click', (e) => {
+        if (e.target === formContainer) {
+            formContainer.style.display = 'none';
+        }
+    });
+
+    // Populate receipt with data from form
+    dataEntryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Date
+        const dateValue = document.getElementById('inspection-date-input').value;
+        document.getElementById('receipt-date').textContent = dateValue;
+
+        // Inspection Information
+        document.getElementById('machine-serial-number').textContent = document.getElementById('machine-serial-number-input').value;
+        document.getElementById('inspection-date').textContent = dateValue;
+        document.getElementById('shop-name').textContent = document.getElementById('shop-name-input').value;
+        document.getElementById('shop-address').textContent = document.getElementById('shop-address-input').value;
+
+        // Machine Data
+        const machineDataContainer = document.getElementById('machine-data-items');
+        machineDataContainer.innerHTML = '';
+
+        // Collect fixed machine data fields
+        const machineDataFields = [
+            { id: 'data-voltage', description: 'Voltage (V)', icon: 'fas fa-bolt' },
+            { id: 'data-current', description: 'Current (A)', icon: 'fas fa-plug' },
+            { id: 'data-temperature', description: 'Temperature (°C)', icon: 'fas fa-thermometer-half' },
+            { id: 'data-power', description: 'Power (W)', icon: 'fas fa-battery-three-quarters' },
+            { id: 'data-status', description: 'Machine Status', icon: 'fas fa-info-circle' },
+            { id: 'data-operating-hours', description: 'Operating Hours', icon: 'fas fa-clock' },
+            { id: 'data-last-maintenance-date', description: 'Last Maintenance Date', icon: 'fas fa-calendar-check' },
+            { id: 'data-oil-level', description: 'Oil Level', icon: 'fas fa-oil-can' },
+            { id: 'data-noise-level', description: 'Noise Level (dB)', icon: 'fas fa-volume-up' },
+            { id: 'data-vibration-level', description: 'Vibration Level', icon: 'fas fa-wave-square' },
+            { id: 'data-pressure', description: 'Pressure (Bar)', icon: 'fas fa-tachometer-alt' },
+            { id: 'data-flow-rate', description: 'Flow Rate', icon: 'fas fa-water' },
+            { id: 'data-lubrication-status', description: 'Lubrication Status', icon: 'fas fa-wrench' },
+            { id: 'data-error-codes', description: 'Error Codes', icon: 'fas fa-exclamation-triangle' },
+            { id: 'data-firmware-version', description: 'Firmware Version', icon: 'fas fa-microchip' },
+            { id: 'data-battery-status', description: 'Battery Status', icon: 'fas fa-car-battery' },
+            { id: 'data-load-percentage', description: 'Load Percentage (%)', icon: 'fas fa-percentage' },
+            { id: 'data-humidity', description: 'Humidity (%RH)', icon: 'fas fa-cloud-rain' },
+            { id: 'data-air-filter-condition', description: 'Air Filter Condition', icon: 'fas fa-wind' },
+            { id: 'data-cooling-system-condition', description: 'Cooling System Condition', icon: 'fas fa-snowflake' },
+        ];
+
+        machineDataFields.forEach(field => {
+            const value = document.getElementById(field.id).value;
+            if (value) {
+                const card = document.createElement('div');
+                card.classList.add('machine-data-card');
+
+                const icon = document.createElement('i');
+                icon.className = `${field.icon} machine-data-icon`;
+                card.appendChild(icon);
+
+                const details = document.createElement('div');
+                details.classList.add('machine-data-details');
+
+                const title = document.createElement('h4');
+                title.textContent = field.description;
+                details.appendChild(title);
+
+                const valuePara = document.createElement('p');
+                valuePara.textContent = value;
+                details.appendChild(valuePara);
+
+                card.appendChild(details);
+
+                machineDataContainer.appendChild(card);
+            }
+        });
+
+        // Special Notes and Remarks
+        document.getElementById('special-notes').textContent = document.getElementById('special-notes-input').value;
+        document.getElementById('remarks').textContent = document.getElementById('remarks-input').value;
+
+        // Save form data
+        saveFormData();
+
+        // Hide form after submission
+        formContainer.style.display = 'none';
+
+        // Show success message
+        alert('Receipt has been generated successfully!');
+
+        // Scroll to the top of the receipt
+        window.scrollTo(0, 0);
+    });
+
+    // Initialize
+    window.onload = function() {
+        showCurrentStep();
+    };
 </script>
 
 </body>

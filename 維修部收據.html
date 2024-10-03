@@ -470,16 +470,107 @@
             <h3>Machine Data</h3>
 
             <!-- 固定的20个机身数据输入栏位 -->
-            <!-- 请添加所有20个输入栏位，确保ID与JavaScript代码中的匹配 -->
-
-            <!-- 示例： -->
+            <!-- 以下是20个机身数据输入栏位 -->
             <!-- 1 -->
             <div class="machine-data-item">
                 <label for="data-voltage">Voltage (V):</label>
                 <input type="text" id="data-voltage" required aria-required="true">
             </div>
-            <!-- 继续添加剩余的19个输入栏位 -->
-            <!-- ... -->
+            <!-- 2 -->
+            <div class="machine-data-item">
+                <label for="data-current">Current (A):</label>
+                <input type="text" id="data-current" required aria-required="true">
+            </div>
+            <!-- 3 -->
+            <div class="machine-data-item">
+                <label for="data-temperature">Temperature (°C):</label>
+                <input type="text" id="data-temperature" required aria-required="true">
+            </div>
+            <!-- 4 -->
+            <div class="machine-data-item">
+                <label for="data-power">Power (W):</label>
+                <input type="text" id="data-power" required aria-required="true">
+            </div>
+            <!-- 5 -->
+            <div class="machine-data-item">
+                <label for="data-status">Machine Status:</label>
+                <input type="text" id="data-status" required aria-required="true">
+            </div>
+            <!-- 6 -->
+            <div class="machine-data-item">
+                <label for="data-operating-hours">Operating Hours:</label>
+                <input type="text" id="data-operating-hours" required aria-required="true">
+            </div>
+            <!-- 7 -->
+            <div class="machine-data-item">
+                <label for="data-last-maintenance-date">Last Maintenance Date:</label>
+                <input type="date" id="data-last-maintenance-date" required aria-required="true">
+            </div>
+            <!-- 8 -->
+            <div class="machine-data-item">
+                <label for="data-oil-level">Oil Level:</label>
+                <input type="text" id="data-oil-level" required aria-required="true">
+            </div>
+            <!-- 9 -->
+            <div class="machine-data-item">
+                <label for="data-noise-level">Noise Level (dB):</label>
+                <input type="text" id="data-noise-level" required aria-required="true">
+            </div>
+            <!-- 10 -->
+            <div class="machine-data-item">
+                <label for="data-vibration-level">Vibration Level:</label>
+                <input type="text" id="data-vibration-level" required aria-required="true">
+            </div>
+            <!-- 11 -->
+            <div class="machine-data-item">
+                <label for="data-pressure">Pressure (Bar):</label>
+                <input type="text" id="data-pressure" required aria-required="true">
+            </div>
+            <!-- 12 -->
+            <div class="machine-data-item">
+                <label for="data-flow-rate">Flow Rate:</label>
+                <input type="text" id="data-flow-rate" required aria-required="true">
+            </div>
+            <!-- 13 -->
+            <div class="machine-data-item">
+                <label for="data-lubrication-status">Lubrication Status:</label>
+                <input type="text" id="data-lubrication-status" required aria-required="true">
+            </div>
+            <!-- 14 -->
+            <div class="machine-data-item">
+                <label for="data-error-codes">Error Codes:</label>
+                <input type="text" id="data-error-codes" required aria-required="true">
+            </div>
+            <!-- 15 -->
+            <div class="machine-data-item">
+                <label for="data-firmware-version">Firmware Version:</label>
+                <input type="text" id="data-firmware-version" required aria-required="true">
+            </div>
+            <!-- 16 -->
+            <div class="machine-data-item">
+                <label for="data-battery-status">Battery Status:</label>
+                <input type="text" id="data-battery-status" required aria-required="true">
+            </div>
+            <!-- 17 -->
+            <div class="machine-data-item">
+                <label for="data-load-percentage">Load Percentage (%):</label>
+                <input type="text" id="data-load-percentage" required aria-required="true">
+            </div>
+            <!-- 18 -->
+            <div class="machine-data-item">
+                <label for="data-humidity">Humidity (%RH):</label>
+                <input type="text" id="data-humidity" required aria-required="true">
+            </div>
+            <!-- 19 -->
+            <div class="machine-data-item">
+                <label for="data-air-filter-condition">Air Filter Condition:</label>
+                <input type="text" id="data-air-filter-condition" required aria-required="true">
+            </div>
+            <!-- 20 -->
+            <div class="machine-data-item">
+                <label for="data-cooling-system-condition">Cooling System Condition:</label>
+                <input type="text" id="data-cooling-system-condition" required aria-required="true">
+            </div>
 
             <div id="form-navigation">
                 <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
@@ -566,6 +657,7 @@
         document.getElementById('data-entry-form').reset();
         signatureDataURL = '';
         document.getElementById('signature-preview').innerHTML = '';
+        document.getElementById('signature-image-container').innerHTML = '';
         alert('Form has been cleared.');
         currentStep = 1;
         showCurrentStep();
@@ -628,7 +720,6 @@
     const clearSignatureBtn = document.getElementById('clear-signature');
     const signatureCanvas = document.getElementById('signature-canvas');
     const signaturePreview = document.getElementById('signature-preview');
-    let signaturePad;
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
@@ -643,6 +734,7 @@
     openSignaturePadBtn.addEventListener('click', () => {
         signatureModal.style.display = 'block';
         resizeCanvas();
+        ctx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
@@ -716,6 +808,10 @@
     });
 
     saveSignatureBtn.addEventListener('click', () => {
+        if (signatureCanvas.toDataURL() === document.createElement('canvas').toDataURL()) {
+            alert('Please provide a signature.');
+            return;
+        }
         signatureDataURL = signatureCanvas.toDataURL();
         signaturePreview.innerHTML = '<p>Signature added.</p>';
         signatureModal.style.display = 'none';
@@ -742,8 +838,25 @@
         // Collect fixed machine data fields
         const machineDataFields = [
             { id: 'data-voltage', description: 'Voltage (V)', icon: 'fas fa-bolt' },
-            // 继续添加其他字段
-            // ...
+            { id: 'data-current', description: 'Current (A)', icon: 'fas fa-plug' },
+            { id: 'data-temperature', description: 'Temperature (°C)', icon: 'fas fa-thermometer-half' },
+            { id: 'data-power', description: 'Power (W)', icon: 'fas fa-battery-three-quarters' },
+            { id: 'data-status', description: 'Machine Status', icon: 'fas fa-info-circle' },
+            { id: 'data-operating-hours', description: 'Operating Hours', icon: 'fas fa-clock' },
+            { id: 'data-last-maintenance-date', description: 'Last Maintenance Date', icon: 'fas fa-calendar-check' },
+            { id: 'data-oil-level', description: 'Oil Level', icon: 'fas fa-oil-can' },
+            { id: 'data-noise-level', description: 'Noise Level (dB)', icon: 'fas fa-volume-up' },
+            { id: 'data-vibration-level', description: 'Vibration Level', icon: 'fas fa-wave-square' },
+            { id: 'data-pressure', description: 'Pressure (Bar)', icon: 'fas fa-tachometer-alt' },
+            { id: 'data-flow-rate', description: 'Flow Rate', icon: 'fas fa-water' },
+            { id: 'data-lubrication-status', description: 'Lubrication Status', icon: 'fas fa-wrench' },
+            { id: 'data-error-codes', description: 'Error Codes', icon: 'fas fa-exclamation-triangle' },
+            { id: 'data-firmware-version', description: 'Firmware Version', icon: 'fas fa-microchip' },
+            { id: 'data-battery-status', description: 'Battery Status', icon: 'fas fa-car-battery' },
+            { id: 'data-load-percentage', description: 'Load Percentage (%)', icon: 'fas fa-percentage' },
+            { id: 'data-humidity', description: 'Humidity (%RH)', icon: 'fas fa-cloud-rain' },
+            { id: 'data-air-filter-condition', description: 'Air Filter Condition', icon: 'fas fa-wind' },
+            { id: 'data-cooling-system-condition', description: 'Cooling System Condition', icon: 'fas fa-snowflake' },
         ];
 
         machineDataFields.forEach(field => {

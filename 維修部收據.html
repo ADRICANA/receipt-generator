@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>维护检查收据</title>
+    <title>Maintenance Inspection Receipt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 引入Google字体 -->
+    <!-- Include Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- 引入Font Awesome图标库 -->
+    <!-- Include Font Awesome Icon Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-GN5GfZlHgNUzY/qYcKrXCMntmVnyhnXg4I/V2YVlhjb4YRB88w6mR+/23SAwtMpqx2xMrSZf8USTEPAvu0NwJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* 使用CSS变量统一管理颜色和字体大小 */
+        /* Use CSS variables to manage colors and font sizes */
         :root {
             --primary-color: #2C3E50;
             --secondary-color: #95A5A6;
@@ -128,7 +128,7 @@
             line-height: 1.6;
         }
 
-        /* 动态机身数据样式 */
+        /* Dynamic Machine Data Styles */
         .machine-data-section {
             position: relative;
         }
@@ -225,7 +225,7 @@
             position: relative;
         }
 
-        /* Modal 样式 */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -277,10 +277,10 @@
             border-radius: 8px;
             width: 100%;
             height: 200px;
-            touch-action: none; /* 防止移动端手势干扰 */
+            touch-action: none; /* Prevent gesture interference on mobile */
         }
 
-        /* 签名按钮样式 */
+        /* Signature Button Styles */
         #save-signature,
         #clear-signature {
             margin-top: 15px;
@@ -300,10 +300,7 @@
             background-color: #1A73E8;
         }
 
-        /* 输入表单和其他样式 */
-        /* ... 省略，与之前相同的样式代码 ... */
-
-        /* Show form button */
+        /* Show Form Button */
         #show-form-btn {
             position: fixed;
             bottom: 20px;
@@ -325,7 +322,7 @@
             transform: translateY(-3px);
         }
 
-        /* Print button */
+        /* Print Button */
         #print-btn {
             position: fixed;
             bottom: 80px;
@@ -347,12 +344,12 @@
             transform: translateY(-3px);
         }
 
-        /* 防止滚动穿透 */
+        /* Prevent Scroll Bleed */
         body.modal-open {
             overflow: hidden;
         }
 
-        /* 表单样式 */
+        /* Form Styles */
         #form-container {
             position: fixed;
             top: 0;
@@ -418,7 +415,7 @@
             box-shadow: 0 0 0 2px rgba(41, 128, 185, 0.2);
         }
 
-        /* 按钮样式 */
+        /* Buttons Styles */
         #form-container button {
             margin-top: 20px;
             padding: 12px 20px;
@@ -437,12 +434,12 @@
             background-color: #1A73E8;
         }
 
-        /* 导航按钮 */
+        /* Navigation Buttons */
         #form-navigation {
             text-align: right;
         }
 
-        /* 进度指示器样式 */
+        /* Progress Indicator Styles */
         .progress-indicator {
             text-align: center;
             margin-bottom: 20px;
@@ -464,7 +461,7 @@
             margin: 0 8px;
         }
 
-        /* 响应式调整 */
+        /* Responsive Adjustments */
         @media screen and (max-width: 600px) {
             .receipt-title {
                 font-size: 24px;
@@ -505,38 +502,38 @@
 <div class="receipt-container" id="receipt-container">
     <!-- Logo Section -->
     <div class="logo">
-        <img src="YOUR_LOGO_URL_HERE" alt="Company Logo">
+        <img src="https://static.wixstatic.com/media/c0babf_869d1379fd57425893fbeb7057f21868~mv2.png/v1/fill/w_492,h_178,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Phoelia%20Logo.png" alt="Company Logo">
     </div>
 
     <!-- Title -->
-    <h1 class="receipt-title">维护检查收据</h1>
+    <h1 class="receipt-title">Maintenance Inspection Receipt</h1>
 
     <!-- Date Section -->
     <div class="date-section">
-        日期：<span id="receipt-date"></span>
+        Date: <span id="receipt-date"></span>
     </div>
 
     <!-- Company Information -->
     <div class="company-info">
-        <p>公司：Phoelia (Far East) Co., Ltd.</p>
-        <p>地址：Unit 4, 1/F, Fu Hang Industrial Building, 1 Hok Yuen Street East, Hunghom, Kowloon, HONG KONG</p>
-        <p>电话：(852) 2333 9698 &nbsp;&nbsp;&nbsp;&nbsp; 邮件：<a href="mailto:info@phoelia.com">info@phoelia.com</a></p>
+        <p>Company: Phoelia (Far East) Co., Ltd.</p>
+        <p>Address: Unit 4, 1/F, Fu Hang Industrial Building, 1 Hok Yuen Street East, Hunghom, Kowloon, HONG KONG</p>
+        <p>Phone: (852) 2333 9698 &nbsp;&nbsp;&nbsp;&nbsp; Email: <a href="mailto:info@phoelia.com">info@phoelia.com</a></p>
     </div>
 
     <!-- Inspection Information -->
     <div class="section inspection-info">
-        <h3>检查信息</h3>
+        <h3>Inspection Information</h3>
         <div class="section-content">
-            <p><strong>机身序列号：</strong> <span id="machine-serial-number">[Serial Number]</span></p>
-            <p><strong>检查日期：</strong> <span id="inspection-date">[Inspection Date]</span></p>
-            <p><strong>店铺名称：</strong> <span id="shop-name">[Shop Name]</span></p>
-            <p><strong>店铺地址：</strong> <span id="shop-address">[Shop Address]</span></p>
+            <p><strong>Machine Serial Number:</strong> <span id="machine-serial-number">[Serial Number]</span></p>
+            <p><strong>Inspection Date:</strong> <span id="inspection-date">[Inspection Date]</span></p>
+            <p><strong>Shop Name:</strong> <span id="shop-name">[Shop Name]</span></p>
+            <p><strong>Shop Address:</strong> <span id="shop-address">[Shop Address]</span></p>
         </div>
     </div>
 
     <!-- Machine Data -->
     <div class="section machine-data-section">
-        <h3>机身数据</h3>
+        <h3>Machine Data</h3>
         <div id="machine-data-items">
             <!-- Machine data items will be populated here -->
         </div>
@@ -544,19 +541,19 @@
 
     <!-- Special Notes -->
     <div class="notes-section">
-        <h3>特别说明</h3>
+        <h3>Special Notes</h3>
         <p id="special-notes">[Special Notes]</p>
     </div>
 
     <!-- Remarks -->
     <div class="remarks-section">
-        <h3>备注</h3>
+        <h3>Remarks</h3>
         <p id="remarks">[Remarks]</p>
     </div>
 
     <!-- Customer Signature -->
     <div class="signature">
-        <h3>客户签名</h3>
+        <h3>Customer Signature</h3>
         <div class="signature-image" id="signature-image-container">
             <!-- Signature image will be displayed here -->
         </div>
@@ -564,7 +561,7 @@
 
     <!-- Footer -->
     <div class="footer">
-        感谢您选择Phoelia (Far East) Co., Ltd。如有任何疑问，请随时与我们联系。
+        Thank you for choosing Phoelia (Far East) Co., Ltd. If you have any questions, please feel free to contact us.
     </div>
 </div>
 
@@ -578,7 +575,7 @@
 <div id="form-container" style="display: none;">
     <!-- Form content -->
     <form id="data-entry-form">
-        <h2>输入数据</h2>
+        <h2>Input Data</h2>
 
         <!-- Progress Indicator -->
         <div class="progress-indicator">
@@ -589,58 +586,58 @@
 
         <!-- Step 1: Inspection Information -->
         <div class="form-step" id="step-1">
-            <label for="machine-serial-number-input">机身序列号：</label>
+            <label for="machine-serial-number-input">Machine Serial Number:</label>
             <input type="text" id="machine-serial-number-input" required aria-required="true">
 
-            <label for="inspection-date-input">检查日期：</label>
+            <label for="inspection-date-input">Inspection Date:</label>
             <input type="date" id="inspection-date-input" required aria-required="true">
 
-            <label for="shop-name-input">店铺名称：</label>
+            <label for="shop-name-input">Shop Name:</label>
             <input type="text" id="shop-name-input" required aria-required="true">
 
-            <label for="shop-address-input">店铺地址：</label>
+            <label for="shop-address-input">Shop Address:</label>
             <input type="text" id="shop-address-input" required aria-required="true">
 
             <div id="form-navigation">
-                <button type="button" onclick="nextStep()" aria-label="Next Step">下一步</button>
+                <button type="button" onclick="nextStep()" aria-label="Next Step">Next</button>
             </div>
         </div>
 
         <!-- Step 2: Machine Data -->
         <div class="form-step" id="step-2" style="display:none;">
-            <h3>机身数据</h3>
-            <button type="button" class="add-machine-data-btn" onclick="addMachineData()">添加数据</button>
+            <h3>Machine Data</h3>
+            <button type="button" class="add-machine-data-btn" onclick="addMachineData()">Add Data</button>
 
             <div id="machine-data-inputs">
-                <!-- 动态添加的机身数据输入项 -->
+                <!-- Dynamically added machine data inputs -->
             </div>
 
             <div id="form-navigation">
-                <button type="button" onclick="prevStep()" aria-label="Previous Step">上一步</button>
-                <button type="button" onclick="nextStep()" aria-label="Next Step">下一步</button>
+                <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
+                <button type="button" onclick="nextStep()" aria-label="Next Step">Next</button>
             </div>
         </div>
 
         <!-- Step 3: Notes, Remarks and Signature -->
         <div class="form-step" id="step-3" style="display:none;">
-            <label for="special-notes-input">特别说明：</label>
+            <label for="special-notes-input">Special Notes:</label>
             <textarea id="special-notes-input" rows="4"></textarea>
 
-            <label for="remarks-input">备注：</label>
+            <label for="remarks-input">Remarks:</label>
             <textarea id="remarks-input" rows="4"></textarea>
 
             <!-- Signature Button -->
-            <label>客户签名：</label>
-            <button type="button" id="open-signature-pad">添加签名</button>
+            <label>Customer Signature:</label>
+            <button type="button" id="open-signature-pad">Add Signature</button>
             <div id="signature-preview" style="margin-top: 15px;">
                 <!-- Signature preview will be displayed here -->
             </div>
 
             <div id="form-navigation">
-                <button type="button" onclick="prevStep()" aria-label="Previous Step">上一步</button>
-                <button type="submit" aria-label="Generate Receipt">生成收据</button>
+                <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
+                <button type="submit" aria-label="Generate Receipt">Generate Receipt</button>
             </div>
-            <button id="clear-form-btn" type="button" onclick="clearForm()" aria-label="Clear Form">清空表单</button>
+            <button id="clear-form-btn" type="button" onclick="clearForm()" aria-label="Clear Form">Clear Form</button>
         </div>
     </form>
 </div>
@@ -649,11 +646,11 @@
 <div id="signature-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <h2>请在此签名</h2>
+        <h2>Please Sign Below</h2>
         <canvas id="signature-canvas"></canvas>
         <div>
-            <button type="button" id="save-signature">保存签名</button>
-            <button type="button" id="clear-signature">清除</button>
+            <button type="button" id="save-signature">Save Signature</button>
+            <button type="button" id="clear-signature">Clear</button>
         </div>
     </div>
 </div>
@@ -663,7 +660,7 @@
     const totalSteps = 3;
     let signatureDataURL = '';
     let machineDataCount = 0;
-    const maxMachineDataItems = 20; // 最大的机身数据项数量
+    const maxMachineDataItems = 20; // Maximum number of machine data items
     const machineDataIcons = [
         'fas fa-bolt', 'fas fa-plug', 'fas fa-thermometer-half', 'fas fa-battery-three-quarters',
         'fas fa-info-circle', 'fas fa-clock', 'fas fa-calendar-check', 'fas fa-oil-can',
@@ -725,7 +722,7 @@
         document.getElementById('signature-image-container').innerHTML = '';
         document.getElementById('machine-data-inputs').innerHTML = '';
         machineDataCount = 0;
-        alert('表单已清空。');
+        alert('Form has been cleared.');
         currentStep = 1;
         showCurrentStep();
         updateProgressIndicator();
@@ -755,7 +752,7 @@
             }
             if (formData['signatureDataURL']) {
                 signatureDataURL = formData['signatureDataURL'];
-                document.getElementById('signature-preview').innerHTML = '<p>已添加签名。</p>';
+                document.getElementById('signature-preview').innerHTML = '<p>Signature added.</p>';
             }
             if (formData['machineData']) {
                 formData['machineData'].forEach(dataItem => {
@@ -773,7 +770,7 @@
 
     function addMachineData(description = '', value = '') {
         if (machineDataCount >= maxMachineDataItems) {
-            alert('您已达到最大机身数据项数量。');
+            alert('You have reached the maximum number of machine data items.');
             return;
         }
         const container = document.getElementById('machine-data-inputs');
@@ -786,7 +783,7 @@
         const descriptionInput = document.createElement('input');
         descriptionInput.type = 'text';
         descriptionInput.name = `data-description-${index}`;
-        descriptionInput.placeholder = '数据描述';
+        descriptionInput.placeholder = 'Data Description';
         descriptionInput.value = description;
         descriptionInput.required = true;
         dataDiv.appendChild(descriptionInput);
@@ -794,7 +791,7 @@
         const valueInput = document.createElement('input');
         valueInput.type = 'text';
         valueInput.name = `data-value-${index}`;
-        valueInput.placeholder = '值';
+        valueInput.placeholder = 'Value';
         valueInput.value = value;
         valueInput.required = true;
         dataDiv.appendChild(valueInput);
@@ -856,7 +853,7 @@
         }
     });
 
-    // Signature Pad 代码
+    // Signature Pad code
     const signatureModal = document.getElementById('signature-modal');
     const openSignaturePadBtn = document.getElementById('open-signature-pad');
     const closeModalBtn = document.querySelector('.close-modal');
@@ -961,12 +958,12 @@
         emptyCanvas.height = signatureCanvas.height;
 
         if (signatureCanvas.toDataURL() === emptyCanvas.toDataURL()) {
-            alert('请提供签名。');
+            alert('Please provide a signature.');
             return;
         }
 
         signatureDataURL = signatureCanvas.toDataURL();
-        signaturePreview.innerHTML = '<p>已添加签名。</p>';
+        signaturePreview.innerHTML = '<p>Signature added.</p>';
         signatureModal.style.display = 'none';
         document.body.classList.remove('modal-open');
     });
@@ -1027,7 +1024,7 @@
             const signatureImageContainer = document.getElementById('signature-image-container');
             signatureImageContainer.innerHTML = `<img src="${signatureDataURL}" alt="Customer Signature">`;
         } else {
-            alert('请提供签名。');
+            alert('Please provide a signature.');
             return;
         }
 
@@ -1036,7 +1033,7 @@
         document.body.classList.remove('modal-open');
 
         // Show success message
-        alert('收据已成功生成！');
+        alert('Receipt has been successfully generated!');
 
         // Scroll to the top of the receipt
         window.scrollTo(0, 0);

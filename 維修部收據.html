@@ -2,43 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Maintenance Inspection Receipt</title>
+    <title>维护检查收据</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- 引入Font Awesome图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-HlKiefNJSc4bww0N7wsl9CdtXCDkmAzTBkVGL2x5lpTMVW2wauR9hbW296810I0ENu7WdfPQKpAKe4I0jeYekg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-GN5GfZlHgNUzY/qYcKrXCMntmVnyhnXg4I/V2YVlhjb4YRB88w6mR+/23SAwtMpqx2xMrSZf8USTEPAvu0NwJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* 使用CSS变量统一管理颜色和字体大小 */
         :root {
-            --primary-color: #002436;
-            --secondary-color: #555;
-            --accent-color: #004080;
-            --highlight-color: #e0f7fa;
+            --primary-color: #2C3E50;
+            --secondary-color: #95A5A6;
+            --accent-color: #2980B9;
+            --highlight-color: #ECF0F1;
             --font-family: 'Roboto', sans-serif;
             --title-font-size: 28px;
-            --heading-font-size: 18px;
-            --text-font-size: 14px;
+            --heading-font-size: 20px;
+            --text-font-size: 16px;
+            --animation-duration: 0.3s;
         }
 
         body {
             font-family: var(--font-family);
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: var(--highlight-color);
+            overflow-x: hidden;
         }
 
         .receipt-container {
             max-width: 800px;
-            width: 100%;
-            margin: 20px auto;
+            width: 90%;
+            margin: 40px auto;
             padding: 20px;
             background-color: #fff;
             box-sizing: border-box;
             position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            border-radius: 8px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn var(--animation-duration) ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
         /* Logo Styling */
@@ -47,8 +54,13 @@
         }
 
         .logo img {
-            max-width: 200px;
+            max-width: 150px;
             height: auto;
+            transition: transform var(--animation-duration);
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
         }
 
         .receipt-title {
@@ -56,12 +68,14 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .date-section {
             font-size: 16px;
             margin-bottom: 20px;
-            color: #333;
+            color: var(--secondary-color);
         }
 
         .company-info {
@@ -81,95 +95,93 @@
             text-align: left;
             width: 100%;
             padding: 0 10px;
+            animation: slideIn var(--animation-duration) ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {opacity: 0; transform: translateX(-20px);}
+            to {opacity: 1; transform: translateX(0);}
         }
 
         .section h3 {
             font-size: var(--heading-font-size);
             color: var(--primary-color);
             margin-bottom: 15px;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 5px;
             position: relative;
         }
 
-        .section h3::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-
         .section-content {
-            background-color: #fafafa;
-            padding: 15px;
+            background-color: #FAFAFA;
+            padding: 20px;
             border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        .section p {
+        .section-content p {
             margin: 10px 0;
             font-size: var(--text-font-size);
-            color: #333;
+            color: var(--primary-color);
             word-wrap: break-word;
             font-weight: 500;
+            line-height: 1.6;
         }
 
-        /* Machine Data 样式优化 */
-        .machine-data-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
+        /* 动态机身数据样式 */
+        .machine-data-section {
+            position: relative;
+        }
+
+        .add-machine-data-btn {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: var(--text-font-size);
+            transition: background-color var(--animation-duration);
+        }
+
+        .add-machine-data-btn:hover {
+            background-color: #1A73E8;
+        }
+
+        .machine-data-item {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .machine-data-icon {
-            font-size: 24px;
-            color: var(--accent-color);
-            margin-right: 15px;
-            flex: 0 0 30px;
-        }
-
-        .machine-data-details {
-            flex: 1;
-            min-width: 0; /* 防止内容溢出 */
-        }
-
-        .machine-data-details h4 {
-            margin: 0;
-            font-size: 16px;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .machine-data-details p {
-            margin: 5px 0 0;
-            font-size: var(--text-font-size);
-            color: #333;
-            font-weight: 400;
-        }
-
-        /* 特别事项和备注样式 */
-        .notes-section,
-        .remarks-section {
-            margin-top: 20px;
-            padding: 0 10px;
-        }
-
-        .notes-section p,
-        .remarks-section p {
-            font-size: var(--text-font-size);
-            color: #333;
-            font-weight: 400;
-            background-color: #fafafa;
-            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #FFFFFF;
+            padding: 10px;
             border-radius: 8px;
-            line-height: 1.6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform var(--animation-duration);
+        }
+
+        .machine-data-item:hover {
+            transform: translateX(5px);
+        }
+
+        .machine-data-item input {
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .remove-machine-data-btn {
+            background-color: transparent;
+            border: none;
+            color: #FF6B6B;
+            cursor: pointer;
+            font-size: 20px;
+            transition: color var(--animation-duration);
+        }
+
+        .remove-machine-data-btn:hover {
+            color: #FF4757;
         }
 
         /* Signature Section */
@@ -185,24 +197,17 @@
             font-size: var(--heading-font-size);
             color: var(--primary-color);
             margin-bottom: 15px;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 5px;
             position: relative;
-        }
-
-        .signature h3::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-color);
         }
 
         .signature-image {
             margin-top: 20px;
             text-align: left;
+            background-color: #FAFAFA;
+            padding: 20px;
+            border-radius: 8px;
         }
 
         .signature-image img {
@@ -216,7 +221,7 @@
             margin-top: 20px;
             text-align: center;
             font-size: 12px;
-            color: #777;
+            color: var(--secondary-color);
             position: relative;
         }
 
@@ -229,7 +234,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
+            overflow-y: auto;
             background-color: rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
         }
@@ -238,11 +243,16 @@
             background-color: #fff;
             margin: 50px auto;
             padding: 20px;
-            border: 1px solid #888;
             width: 90%;
             max-width: 600px;
-            border-radius: 8px;
+            border-radius: 12px;
             position: relative;
+            animation: dropIn var(--animation-duration) ease-in-out;
+        }
+
+        @keyframes dropIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
         .close-modal {
@@ -275,39 +285,23 @@
         #clear-signature {
             margin-top: 15px;
             padding: 10px 20px;
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             color: #fff;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: var(--text-font-size);
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background-color var(--animation-duration);
             margin-right: 10px;
         }
 
         #save-signature:hover,
         #clear-signature:hover {
-            background-color: var(--accent-color);
+            background-color: #1A73E8;
         }
 
-        /* 提升按钮的样式 */
-        #form-container button {
-            margin-top: 20px;
-            padding: 12px 20px;
-            background-color: var(--primary-color);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: background 0.3s ease;
-            display: inline-block;
-            width: auto;
-        }
-
-        #form-container button:hover {
-            background-color: var(--accent-color);
-        }
+        /* 输入表单和其他样式 */
+        /* ... 省略，与之前相同的样式代码 ... */
 
         /* Show form button */
         #show-form-btn {
@@ -315,20 +309,20 @@
             bottom: 20px;
             right: 20px;
             padding: 15px;
-            background-color: var(--primary-color);
+            background-color: var(--accent-color);
             color: #fff;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 24px;
             z-index: 1000;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color var(--animation-duration), transform var(--animation-duration);
         }
 
         #show-form-btn:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-2px);
+            background-color: #1A73E8;
+            transform: translateY(-3px);
         }
 
         /* Print button */
@@ -337,54 +331,20 @@
             bottom: 80px;
             right: 20px;
             padding: 15px;
-            background-color: #28a745;
+            background-color: #2ecc71;
             color: #fff;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 24px;
             z-index: 1000;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color var(--animation-duration), transform var(--animation-duration);
         }
 
         #print-btn:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-        }
-
-        /* Responsive adjustments */
-        @media screen and (max-width: 600px) {
-            .receipt-title {
-                font-size: 24px;
-            }
-
-            .section h3 {
-                font-size: 16px;
-            }
-
-            #form-container form {
-                margin: 20px auto;
-                padding: 15px;
-            }
-
-            #show-form-btn, #print-btn {
-                padding: 12px;
-                font-size: 18px;
-            }
-
-            .logo img {
-                max-width: 100%;
-            }
-
-            .machine-data-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .machine-data-icon {
-                margin-bottom: 10px;
-            }
+            background-color: #27ae60;
+            transform: translateY(-3px);
         }
 
         /* 防止滚动穿透 */
@@ -392,7 +352,7 @@
             overflow: hidden;
         }
 
-        /* Form styling */
+        /* 表单样式 */
         #form-container {
             position: fixed;
             top: 0;
@@ -411,11 +371,17 @@
             margin: 50px auto;
             width: 90%;
             max-width: 600px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
             max-height: 90%;
             box-sizing: border-box;
+            animation: fadeInUp var(--animation-duration) ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
         #form-container h2 {
@@ -435,13 +401,13 @@
         #form-container input,
         #form-container textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
             font-size: var(--text-font-size);
-            transition: border-color 0.3s ease;
+            transition: border-color var(--animation-duration);
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
@@ -449,8 +415,89 @@
         #form-container textarea:focus {
             border-color: var(--accent-color);
             outline: none;
+            box-shadow: 0 0 0 2px rgba(41, 128, 185, 0.2);
         }
 
+        /* 按钮样式 */
+        #form-container button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: var(--text-font-size);
+            transition: background var(--animation-duration);
+            display: inline-block;
+            width: auto;
+        }
+
+        #form-container button:hover {
+            background-color: #1A73E8;
+        }
+
+        /* 导航按钮 */
+        #form-navigation {
+            text-align: right;
+        }
+
+        /* 进度指示器样式 */
+        .progress-indicator {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+
+        .progress-indicator .active {
+            background-color: var(--accent-color);
+            width: 12px;
+            height: 12px;
+            margin: 0 8px;
+        }
+
+        /* 响应式调整 */
+        @media screen and (max-width: 600px) {
+            .receipt-title {
+                font-size: 24px;
+            }
+
+            .section h3 {
+                font-size: 18px;
+            }
+
+            #form-container form {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            #show-form-btn, #print-btn {
+                padding: 12px;
+                font-size: 18px;
+            }
+
+            .logo img {
+                max-width: 80%;
+            }
+
+            .machine-data-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .remove-machine-data-btn {
+                align-self: flex-end;
+                margin-top: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -458,38 +505,38 @@
 <div class="receipt-container" id="receipt-container">
     <!-- Logo Section -->
     <div class="logo">
-        <img src="https://static.wixstatic.com/media/c0babf_869d1379fd57425893fbeb7057f21868~mv2.png" alt="Company Logo">
+        <img src="YOUR_LOGO_URL_HERE" alt="Company Logo">
     </div>
 
     <!-- Title -->
-    <h1 class="receipt-title">Maintenance Inspection Receipt</h1>
+    <h1 class="receipt-title">维护检查收据</h1>
 
     <!-- Date Section -->
     <div class="date-section">
-        Date: <span id="receipt-date"></span>
+        日期：<span id="receipt-date"></span>
     </div>
 
     <!-- Company Information -->
     <div class="company-info">
-        <p>Company: Phoelia (Far East) Co., Ltd.</p>
-        <p>Address: Unit 4, 1/F, Fu Hang Industrial Building, 1 Hok Yuen Street East, Hunghom, Kowloon, HONG KONG</p>
-        <p>T: (852) 2333 9698 &nbsp;&nbsp;&nbsp;&nbsp; E: <a href="mailto:info@phoelia.com">info@phoelia.com</a></p>
+        <p>公司：Phoelia (Far East) Co., Ltd.</p>
+        <p>地址：Unit 4, 1/F, Fu Hang Industrial Building, 1 Hok Yuen Street East, Hunghom, Kowloon, HONG KONG</p>
+        <p>电话：(852) 2333 9698 &nbsp;&nbsp;&nbsp;&nbsp; 邮件：<a href="mailto:info@phoelia.com">info@phoelia.com</a></p>
     </div>
 
     <!-- Inspection Information -->
     <div class="section inspection-info">
-        <h3>Inspection Information</h3>
+        <h3>检查信息</h3>
         <div class="section-content">
-            <p><strong>Machine Serial Number:</strong> <span id="machine-serial-number">[Serial Number]</span></p>
-            <p><strong>Inspection Date:</strong> <span id="inspection-date">[Inspection Date]</span></p>
-            <p><strong>Shop Name:</strong> <span id="shop-name">[Shop Name]</span></p>
-            <p><strong>Shop Address:</strong> <span id="shop-address">[Shop Address]</span></p>
+            <p><strong>机身序列号：</strong> <span id="machine-serial-number">[Serial Number]</span></p>
+            <p><strong>检查日期：</strong> <span id="inspection-date">[Inspection Date]</span></p>
+            <p><strong>店铺名称：</strong> <span id="shop-name">[Shop Name]</span></p>
+            <p><strong>店铺地址：</strong> <span id="shop-address">[Shop Address]</span></p>
         </div>
     </div>
 
     <!-- Machine Data -->
     <div class="section machine-data-section">
-        <h3>Machine Data</h3>
+        <h3>机身数据</h3>
         <div id="machine-data-items">
             <!-- Machine data items will be populated here -->
         </div>
@@ -497,19 +544,19 @@
 
     <!-- Special Notes -->
     <div class="notes-section">
-        <h3>Special Notes</h3>
+        <h3>特别说明</h3>
         <p id="special-notes">[Special Notes]</p>
     </div>
 
     <!-- Remarks -->
     <div class="remarks-section">
-        <h3>Remarks</h3>
+        <h3>备注</h3>
         <p id="remarks">[Remarks]</p>
     </div>
 
     <!-- Customer Signature -->
     <div class="signature">
-        <h3>Customer Signature</h3>
+        <h3>客户签名</h3>
         <div class="signature-image" id="signature-image-container">
             <!-- Signature image will be displayed here -->
         </div>
@@ -517,7 +564,7 @@
 
     <!-- Footer -->
     <div class="footer">
-        Thank you for choosing Phoelia (Far East) Co., Ltd. If you have any questions, please feel free to contact us.
+        感谢您选择Phoelia (Far East) Co., Ltd。如有任何疑问，请随时与我们联系。
     </div>
 </div>
 
@@ -531,164 +578,69 @@
 <div id="form-container" style="display: none;">
     <!-- Form content -->
     <form id="data-entry-form">
-        <h2>Input Data</h2>
+        <h2>输入数据</h2>
+
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <span id="progress-1" class="active"></span>
+            <span id="progress-2"></span>
+            <span id="progress-3"></span>
+        </div>
 
         <!-- Step 1: Inspection Information -->
         <div class="form-step" id="step-1">
-            <label for="machine-serial-number-input">Machine Serial Number:</label>
+            <label for="machine-serial-number-input">机身序列号：</label>
             <input type="text" id="machine-serial-number-input" required aria-required="true">
 
-            <label for="inspection-date-input">Inspection Date:</label>
+            <label for="inspection-date-input">检查日期：</label>
             <input type="date" id="inspection-date-input" required aria-required="true">
 
-            <label for="shop-name-input">Shop Name:</label>
+            <label for="shop-name-input">店铺名称：</label>
             <input type="text" id="shop-name-input" required aria-required="true">
 
-            <label for="shop-address-input">Shop Address:</label>
+            <label for="shop-address-input">店铺地址：</label>
             <input type="text" id="shop-address-input" required aria-required="true">
 
             <div id="form-navigation">
-                <button type="button" onclick="nextStep()" aria-label="Next Step">Next Step</button>
+                <button type="button" onclick="nextStep()" aria-label="Next Step">下一步</button>
             </div>
         </div>
 
         <!-- Step 2: Machine Data -->
         <div class="form-step" id="step-2" style="display:none;">
-            <h3>Machine Data</h3>
+            <h3>机身数据</h3>
+            <button type="button" class="add-machine-data-btn" onclick="addMachineData()">添加数据</button>
 
-            <!-- 固定的20个机身数据输入栏位 -->
-            <!-- 这里完整列出所有20个输入栏位 -->
-            <div class="machine-data-item">
-                <label for="data-voltage">Voltage (V):</label>
-                <input type="text" id="data-voltage" required aria-required="true">
-            </div>
-            <!-- 继续添加其他机身数据输入栏位，共20个 -->
-            <!-- ... -->
-            <!-- 我们需要在这个地方完整列出所有的20个输入栏位 -->
-
-            <!-- 为了方便，这里将所有20个机身数据输入栏位完整列出 -->
-            <!-- 2 -->
-            <div class="machine-data-item">
-                <label for="data-current">Current (A):</label>
-                <input type="text" id="data-current" required aria-required="true">
-            </div>
-            <!-- 3 -->
-            <div class="machine-data-item">
-                <label for="data-temperature">Temperature (°C):</label>
-                <input type="text" id="data-temperature" required aria-required="true">
-            </div>
-            <!-- 4 -->
-            <div class="machine-data-item">
-                <label for="data-power">Power (W):</label>
-                <input type="text" id="data-power" required aria-required="true">
-            </div>
-            <!-- 5 -->
-            <div class="machine-data-item">
-                <label for="data-status">Machine Status:</label>
-                <input type="text" id="data-status" required aria-required="true">
-            </div>
-            <!-- 6 -->
-            <div class="machine-data-item">
-                <label for="data-operating-hours">Operating Hours:</label>
-                <input type="text" id="data-operating-hours" required aria-required="true">
-            </div>
-            <!-- 7 -->
-            <div class="machine-data-item">
-                <label for="data-last-maintenance-date">Last Maintenance Date:</label>
-                <input type="date" id="data-last-maintenance-date" required aria-required="true">
-            </div>
-            <!-- 8 -->
-            <div class="machine-data-item">
-                <label for="data-oil-level">Oil Level:</label>
-                <input type="text" id="data-oil-level" required aria-required="true">
-            </div>
-            <!-- 9 -->
-            <div class="machine-data-item">
-                <label for="data-noise-level">Noise Level (dB):</label>
-                <input type="text" id="data-noise-level" required aria-required="true">
-            </div>
-            <!-- 10 -->
-            <div class="machine-data-item">
-                <label for="data-vibration-level">Vibration Level:</label>
-                <input type="text" id="data-vibration-level" required aria-required="true">
-            </div>
-            <!-- 11 -->
-            <div class="machine-data-item">
-                <label for="data-pressure">Pressure (Bar):</label>
-                <input type="text" id="data-pressure" required aria-required="true">
-            </div>
-            <!-- 12 -->
-            <div class="machine-data-item">
-                <label for="data-flow-rate">Flow Rate:</label>
-                <input type="text" id="data-flow-rate" required aria-required="true">
-            </div>
-            <!-- 13 -->
-            <div class="machine-data-item">
-                <label for="data-lubrication-status">Lubrication Status:</label>
-                <input type="text" id="data-lubrication-status" required aria-required="true">
-            </div>
-            <!-- 14 -->
-            <div class="machine-data-item">
-                <label for="data-error-codes">Error Codes:</label>
-                <input type="text" id="data-error-codes" required aria-required="true">
-            </div>
-            <!-- 15 -->
-            <div class="machine-data-item">
-                <label for="data-firmware-version">Firmware Version:</label>
-                <input type="text" id="data-firmware-version" required aria-required="true">
-            </div>
-            <!-- 16 -->
-            <div class="machine-data-item">
-                <label for="data-battery-status">Battery Status:</label>
-                <input type="text" id="data-battery-status" required aria-required="true">
-            </div>
-            <!-- 17 -->
-            <div class="machine-data-item">
-                <label for="data-load-percentage">Load Percentage (%):</label>
-                <input type="text" id="data-load-percentage" required aria-required="true">
-            </div>
-            <!-- 18 -->
-            <div class="machine-data-item">
-                <label for="data-humidity">Humidity (%RH):</label>
-                <input type="text" id="data-humidity" required aria-required="true">
-            </div>
-            <!-- 19 -->
-            <div class="machine-data-item">
-                <label for="data-air-filter-condition">Air Filter Condition:</label>
-                <input type="text" id="data-air-filter-condition" required aria-required="true">
-            </div>
-            <!-- 20 -->
-            <div class="machine-data-item">
-                <label for="data-cooling-system-condition">Cooling System Condition:</label>
-                <input type="text" id="data-cooling-system-condition" required aria-required="true">
+            <div id="machine-data-inputs">
+                <!-- 动态添加的机身数据输入项 -->
             </div>
 
             <div id="form-navigation">
-                <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
-                <button type="button" onclick="nextStep()" aria-label="Next Step">Next Step</button>
+                <button type="button" onclick="prevStep()" aria-label="Previous Step">上一步</button>
+                <button type="button" onclick="nextStep()" aria-label="Next Step">下一步</button>
             </div>
         </div>
 
         <!-- Step 3: Notes, Remarks and Signature -->
         <div class="form-step" id="step-3" style="display:none;">
-            <label for="special-notes-input">Special Notes:</label>
+            <label for="special-notes-input">特别说明：</label>
             <textarea id="special-notes-input" rows="4"></textarea>
 
-            <label for="remarks-input">Remarks:</label>
+            <label for="remarks-input">备注：</label>
             <textarea id="remarks-input" rows="4"></textarea>
 
             <!-- Signature Button -->
-            <label>Customer Signature:</label>
-            <button type="button" id="open-signature-pad">Add Signature</button>
+            <label>客户签名：</label>
+            <button type="button" id="open-signature-pad">添加签名</button>
             <div id="signature-preview" style="margin-top: 15px;">
                 <!-- Signature preview will be displayed here -->
             </div>
 
             <div id="form-navigation">
-                <button type="button" onclick="prevStep()" aria-label="Previous Step">Previous</button>
-                <button type="submit" aria-label="Generate Receipt">Generate Receipt</button>
+                <button type="button" onclick="prevStep()" aria-label="Previous Step">上一步</button>
+                <button type="submit" aria-label="Generate Receipt">生成收据</button>
             </div>
-            <button id="clear-form-btn" type="button" onclick="clearForm()" aria-label="Clear Form">Clear Form</button>
+            <button id="clear-form-btn" type="button" onclick="clearForm()" aria-label="Clear Form">清空表单</button>
         </div>
     </form>
 </div>
@@ -697,11 +649,11 @@
 <div id="signature-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <h2>Sign Here</h2>
+        <h2>請在此簽名</h2>
         <canvas id="signature-canvas"></canvas>
         <div>
-            <button type="button" id="save-signature">Save Signature</button>
-            <button type="button" id="clear-signature">Clear</button>
+            <button type="button" id="save-signature">保存簽名</button>
+            <button type="button" id="clear-signature">清除</button>
         </div>
     </div>
 </div>
@@ -710,6 +662,26 @@
     let currentStep = 1;
     const totalSteps = 3;
     let signatureDataURL = '';
+    let machineDataCount = 0;
+    const maxMachineDataItems = 20; // 最大的机身数据项数量
+    const machineDataIcons = [
+        'fas fa-bolt', 'fas fa-plug', 'fas fa-thermometer-half', 'fas fa-battery-three-quarters',
+        'fas fa-info-circle', 'fas fa-clock', 'fas fa-calendar-check', 'fas fa-oil-can',
+        'fas fa-volume-up', 'fas fa-wave-square', 'fas fa-tachometer-alt', 'fas fa-water',
+        'fas fa-wrench', 'fas fa-exclamation-triangle', 'fas fa-microchip', 'fas fa-car-battery',
+        'fas fa-percentage', 'fas fa-cloud-rain', 'fas fa-wind', 'fas fa-snowflake'
+    ];
+
+    function updateProgressIndicator() {
+        for (let i = 1; i <= totalSteps; i++) {
+            const progressDot = document.getElementById(`progress-${i}`);
+            if (i === currentStep) {
+                progressDot.classList.add('active');
+            } else {
+                progressDot.classList.remove('active');
+            }
+        }
+    }
 
     function nextStep() {
         if (validateCurrentStep()) {
@@ -717,6 +689,7 @@
                 document.getElementById(`step-${currentStep}`).style.display = 'none';
                 currentStep++;
                 document.getElementById(`step-${currentStep}`).style.display = 'block';
+                updateProgressIndicator();
                 window.scrollTo(0, 0);
             }
         }
@@ -727,12 +700,13 @@
             document.getElementById(`step-${currentStep}`).style.display = 'none';
             currentStep--;
             document.getElementById(`step-${currentStep}`).style.display = 'block';
+            updateProgressIndicator();
             window.scrollTo(0, 0);
         }
     }
 
     function validateCurrentStep() {
-        const inputs = document.querySelectorAll(`#step-${currentStep} input, #step-${currentStep} textarea`);
+        const inputs = document.querySelectorAll(`#step-${currentStep} input[required], #step-${currentStep} textarea[required]`);
         let valid = true;
         inputs.forEach(input => {
             if (!input.checkValidity()) {
@@ -749,9 +723,12 @@
         signatureDataURL = '';
         document.getElementById('signature-preview').innerHTML = '';
         document.getElementById('signature-image-container').innerHTML = '';
-        alert('Form has been cleared.');
+        document.getElementById('machine-data-inputs').innerHTML = '';
+        machineDataCount = 0;
+        alert('表單已清空。');
         currentStep = 1;
         showCurrentStep();
+        updateProgressIndicator();
     }
 
     function saveFormData() {
@@ -761,6 +738,7 @@
             formData[input.id] = input.value;
         });
         formData['signatureDataURL'] = signatureDataURL;
+        formData['machineData'] = getMachineDataInputs();
         localStorage.setItem('formData', JSON.stringify(formData));
     }
 
@@ -769,13 +747,20 @@
         if (savedData) {
             const formData = JSON.parse(savedData);
             for (const key in formData) {
-                if (formData.hasOwnProperty(key) && document.getElementById(key)) {
-                    document.getElementById(key).value = formData[key];
+                if (formData.hasOwnProperty(key)) {
+                    if (document.getElementById(key)) {
+                        document.getElementById(key).value = formData[key];
+                    }
                 }
             }
             if (formData['signatureDataURL']) {
                 signatureDataURL = formData['signatureDataURL'];
-                document.getElementById('signature-preview').innerHTML = '<p>Signature added.</p>';
+                document.getElementById('signature-preview').innerHTML = '<p>已添加簽名。</p>';
+            }
+            if (formData['machineData']) {
+                formData['machineData'].forEach(dataItem => {
+                    addMachineData(dataItem.description, dataItem.value);
+                });
             }
         }
     }
@@ -784,6 +769,64 @@
         for (let i = 1; i <= totalSteps; i++) {
             document.getElementById(`step-${i}`).style.display = (i === currentStep) ? 'block' : 'none';
         }
+    }
+
+    function addMachineData(description = '', value = '') {
+        if (machineDataCount >= maxMachineDataItems) {
+            alert('您已達到最大機身數據項數量。');
+            return;
+        }
+        const container = document.getElementById('machine-data-inputs');
+        const index = machineDataCount;
+        machineDataCount++;
+
+        const dataDiv = document.createElement('div');
+        dataDiv.classList.add('machine-data-item');
+
+        const descriptionInput = document.createElement('input');
+        descriptionInput.type = 'text';
+        descriptionInput.name = `data-description-${index}`;
+        descriptionInput.placeholder = '數據描述';
+        descriptionInput.value = description;
+        descriptionInput.required = true;
+        dataDiv.appendChild(descriptionInput);
+
+        const valueInput = document.createElement('input');
+        valueInput.type = 'text';
+        valueInput.name = `data-value-${index}`;
+        valueInput.placeholder = '值';
+        valueInput.value = value;
+        valueInput.required = true;
+        dataDiv.appendChild(valueInput);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.classList.add('remove-machine-data-btn');
+        removeBtn.innerHTML = '&times;';
+        removeBtn.addEventListener('click', () => {
+            container.removeChild(dataDiv);
+            machineDataCount--;
+        });
+        dataDiv.appendChild(removeBtn);
+
+        container.appendChild(dataDiv);
+    }
+
+    function getMachineDataInputs() {
+        const dataItems = [];
+        const container = document.getElementById('machine-data-inputs');
+        const items = container.getElementsByClassName('machine-data-item');
+        for (let i = 0; i < items.length; i++) {
+            const descriptionInput = items[i].querySelector('input[name^="data-description"]');
+            const valueInput = items[i].querySelector('input[name^="data-value"]');
+            if (descriptionInput && valueInput) {
+                dataItems.push({
+                    description: descriptionInput.value,
+                    value: valueInput.value,
+                });
+            }
+        }
+        return dataItems;
     }
 
     // Show and hide form
@@ -813,7 +856,7 @@
         }
     });
 
-    // Signature Modal
+    // Signature Pad 代码
     const signatureModal = document.getElementById('signature-modal');
     const openSignaturePadBtn = document.getElementById('open-signature-pad');
     const closeModalBtn = document.querySelector('.close-modal');
@@ -918,12 +961,12 @@
         emptyCanvas.height = signatureCanvas.height;
 
         if (signatureCanvas.toDataURL() === emptyCanvas.toDataURL()) {
-            alert('Please provide a signature.');
+            alert('請提供簽名。');
             return;
         }
 
         signatureDataURL = signatureCanvas.toDataURL();
-        signaturePreview.innerHTML = '<p>Signature added.</p>';
+        signaturePreview.innerHTML = '<p>已添加签名。</p>';
         signatureModal.style.display = 'none';
         document.body.classList.remove('modal-open');
     });
@@ -946,55 +989,30 @@
         const machineDataContainer = document.getElementById('machine-data-items');
         machineDataContainer.innerHTML = '';
 
-        // Collect fixed machine data fields
-        const machineDataFields = [
-            { id: 'data-voltage', description: 'Voltage (V)', icon: 'fas fa-bolt' },
-            { id: 'data-current', description: 'Current (A)', icon: 'fas fa-plug' },
-            { id: 'data-temperature', description: 'Temperature (°C)', icon: 'fas fa-thermometer-half' },
-            { id: 'data-power', description: 'Power (W)', icon: 'fas fa-battery-three-quarters' },
-            { id: 'data-status', description: 'Machine Status', icon: 'fas fa-info-circle' },
-            { id: 'data-operating-hours', description: 'Operating Hours', icon: 'fas fa-clock' },
-            { id: 'data-last-maintenance-date', description: 'Last Maintenance Date', icon: 'fas fa-calendar-check' },
-            { id: 'data-oil-level', description: 'Oil Level', icon: 'fas fa-oil-can' },
-            { id: 'data-noise-level', description: 'Noise Level (dB)', icon: 'fas fa-volume-up' },
-            { id: 'data-vibration-level', description: 'Vibration Level', icon: 'fas fa-wave-square' },
-            { id: 'data-pressure', description: 'Pressure (Bar)', icon: 'fas fa-tachometer-alt' },
-            { id: 'data-flow-rate', description: 'Flow Rate', icon: 'fas fa-water' },
-            { id: 'data-lubrication-status', description: 'Lubrication Status', icon: 'fas fa-wrench' },
-            { id: 'data-error-codes', description: 'Error Codes', icon: 'fas fa-exclamation-triangle' },
-            { id: 'data-firmware-version', description: 'Firmware Version', icon: 'fas fa-microchip' },
-            { id: 'data-battery-status', description: 'Battery Status', icon: 'fas fa-car-battery' },
-            { id: 'data-load-percentage', description: 'Load Percentage (%)', icon: 'fas fa-percentage' },
-            { id: 'data-humidity', description: 'Humidity (%RH)', icon: 'fas fa-cloud-rain' },
-            { id: 'data-air-filter-condition', description: 'Air Filter Condition', icon: 'fas fa-wind' },
-            { id: 'data-cooling-system-condition', description: 'Cooling System Condition', icon: 'fas fa-snowflake' },
-        ];
+        const machineDataInputs = getMachineDataInputs();
 
-        machineDataFields.forEach(field => {
-            const value = document.getElementById(field.id).value;
-            if (value) {
-                const card = document.createElement('div');
-                card.classList.add('machine-data-card');
+        machineDataInputs.forEach((dataItem, index) => {
+            const card = document.createElement('div');
+            card.classList.add('machine-data-card');
 
-                const icon = document.createElement('i');
-                icon.className = `${field.icon} machine-data-icon`;
-                card.appendChild(icon);
+            const icon = document.createElement('i');
+            icon.className = `${machineDataIcons[index % machineDataIcons.length]} machine-data-icon`;
+            card.appendChild(icon);
 
-                const details = document.createElement('div');
-                details.classList.add('machine-data-details');
+            const details = document.createElement('div');
+            details.classList.add('machine-data-details');
 
-                const title = document.createElement('h4');
-                title.textContent = field.description;
-                details.appendChild(title);
+            const title = document.createElement('h4');
+            title.textContent = dataItem.description;
+            details.appendChild(title);
 
-                const valuePara = document.createElement('p');
-                valuePara.textContent = value;
-                details.appendChild(valuePara);
+            const valuePara = document.createElement('p');
+            valuePara.textContent = dataItem.value;
+            details.appendChild(valuePara);
 
-                card.appendChild(details);
+            card.appendChild(details);
 
-                machineDataContainer.appendChild(card);
-            }
+            machineDataContainer.appendChild(card);
         });
 
         // Special Notes and Remarks
@@ -1009,7 +1027,7 @@
             const signatureImageContainer = document.getElementById('signature-image-container');
             signatureImageContainer.innerHTML = `<img src="${signatureDataURL}" alt="Customer Signature">`;
         } else {
-            alert('Please provide a signature.');
+            alert('請提供簽名。');
             return;
         }
 
@@ -1018,7 +1036,7 @@
         document.body.classList.remove('modal-open');
 
         // Show success message
-        alert('Receipt has been generated successfully!');
+        alert('收據已成功生成！');
 
         // Scroll to the top of the receipt
         window.scrollTo(0, 0);
@@ -1027,6 +1045,7 @@
     // Initialize
     window.onload = function() {
         showCurrentStep();
+        updateProgressIndicator();
     };
 </script>
 
